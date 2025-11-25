@@ -1,0 +1,39 @@
+
+<?php 
+/* echo $_SERVER['SERVER_NAME'];
+echo "<br>";exit;
+echo env('URL');exit; */
+// $ip = getenv('URL');echo $ip;exit;
+
+require 'top-section.php'; ?>
+
+    <div class="music-left">
+        <div id="trending" class="loading"></div>
+        
+        
+        <div id="song_pager" hidden>
+            <button id="prev_releases" onclick="get_new_releases('prev', 'n')" class="btn pager-btn">&Lt;</button>
+            <label id="releases_page_n" class="page-n"></label>
+            <button id="next_releases" onclick="get_new_releases('next', 'n')" class="btn pager-btn">&Gt;</button>
+        </div>
+    </div>
+
+    <div class="music-right">
+        <div id="vi"></div> 
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="blue-bar"></div>
+    <div id="new_releases"></div>
+    <div id="featured_albums"></div>
+
+    <div id="discover"></div>
+
+<?php require 'bottom-section.php'; ?>
+
+<script>
+    $('#home').addClass('active');
+    page = 'home';
+</script>
+
+<?php require 'closing-section.php'; ?>
