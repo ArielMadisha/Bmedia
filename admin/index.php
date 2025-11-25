@@ -1,0 +1,182 @@
+<?php
+ require 'header.php';
+?>
+  
+  <h3>Dashboard</h3>
+  <!-- <p>The .navbar-right class is used to right-align navigation bar buttons.</p> -->
+  <section class="statistics">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-4" onclick="gotoSongs()" style="cursor: pointer;">
+          <div class="box">
+            <i class="fa fa-music fa-fw bg-primary"></i>
+            <div class="info">
+              <h3 id="audio_Total">0</h3> <span>Total Songs</span>
+              <!--<p>Lorem ipsum dolor sit amet</p>-->
+            </div>
+          </div>
+        </div>
+        <!--<div class="col-md-3" onclick="gotoSongs()" style="cursor: pointer;">
+          <div class="box">
+            <i class="fa fa-trash fa-fw danger"></i>
+            <div class="info">
+              <h3 id="audio_removed">0</h3> <span>Removed Song</span>
+              <p>Lorem ipsum dolor sit amet</p>
+            </div>
+          </div>
+        </div>-->
+        <div class="col-md-4" onclick="gotoSongs()" style="cursor: pointer;">
+          <div class="box">
+            <i class="fa fa-hourglass-start fa-fw warning"></i>
+            <div class="info">
+              <h3 id="audio_pending">0</h3> <span>Pending Songs</span>
+               <!--<p>Lorem ipsum dolor sit amet</p>-->
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4" onclick="gotoSongs()" style="cursor: pointer;">
+          <div class="box">
+            <i class="fa fa-magic fa-fw success"></i>
+            <div class="info">
+              <h3 id="audio_live">0</h3> <span>Live Songs</span>
+              <!--<p>Lorem ipsum dolor sit amet</p>-->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+<br>
+<section class="statis text-center">
+<div class="container-fluid">
+    <div class="row">
+    <div class="col-md-4" onclick="gotoVideos()" style="cursor: pointer;">
+            <div class="box bg-primary">
+            <i class="fa fa-video-camera"></i>
+            <h3 id="video_Total">0</h3>
+            <p class="lead">Total videos</p>
+        </div>
+    </div>
+<!--<div class="col-md-3" onclick="gotoVideos()" style="cursor: pointer;">
+<div class="box danger">
+    <i class="fa fa-trash"></i>
+    <h3 id="video_removed">0</h3>
+    <p class="lead">Videos Removed</p>
+</div>
+</div>-->
+    <div class="col-md-4" onclick="gotoVideos()" style="cursor: pointer;">
+        <div class="box warning">
+            <i class="fa fa-hourglass-start"></i>
+            <h3 id="video_pending">0</h3>
+            <p class="lead">Videos Pending</p>
+        </div>
+    </div>
+
+    <div class="col-md-4" onclick="gotoVideos()" style="cursor: pointer;">
+        <div class="box success">
+        <i class="fa fa-magic"></i>
+        <h3 id="video_live">0</h3>
+        <p class="lead">Videos Live</p>
+        </div>
+    </div>
+    
+    
+    
+    <div class="col-md-4" onclick="gotoAlbum()" style="cursor: pointer;">
+        <div class="box bg-primary">
+        <i class="fa fa-picture-o"></i>
+        <h3 id="album_Total">0</h3>
+        <p class="lead">Total Albums</p>
+        </div>
+    </div>
+    <!-- <div class="col-md-3" onclick="gotoAlbum()" style="cursor: pointer;">
+        <div class="box danger">
+        <i class="fa fa-trash"></i>
+        <h3 id="album_deleted">0</h3>
+        <p class="lead">Albums Removed</p>
+        </div>
+    </div>-->
+    <div class="col-md-4" onclick="gotoAlbum()" style="cursor: pointer;">
+        <div class="box warning">
+        <i class="fa fa-hourglass-start"></i>
+        <h3 id="album_pending">0</h3>
+        <p class="lead">Albums Pending</p>
+        </div>
+    </div>
+    
+     <div class="col-md-4" onclick="gotoAlbum()" style="cursor: pointer;">
+        <div class="box success">
+        <i class="fa fa-magic"></i>
+        <h3 id="album_live">0</h3>
+        <p class="lead">Albums Live</p>
+        </div>
+    </div>
+    
+   
+    
+    <div class="col-md-4" onclick="gotoArtist()" style="cursor: pointer;">
+        <div class="box bg-primary">
+        <i class="fa fa-user"></i>
+        <h3 id="artist_Total">0</h3>
+        <p class="lead">Total Artist</p>
+        </div>
+    </div>
+    
+    <!--<div class="col-md-4" onclick="gotoArtist()" style="cursor: pointer;">
+        <div class="box danger">
+        <i class="fa fa-trash"></i>
+        <h3 id="artist_deleted">0</h3>
+        <p class="lead">Artist Removed</p>
+        </div>
+    </div>-->
+
+</div>
+</div>
+</section>
+<script>
+function gotoSongs(){
+  window.location.href="<?php echo $root;?>/admin/master";
+}
+function gotoArtist(){
+  localStorage.setItem('artistpage', 1);
+  window.location.href="<?php echo $root;?>/admin/master";
+}
+
+function gotoAlbum(){
+  localStorage.setItem('albumpage', 1);
+  window.location.href="<?php echo $root;?>/admin/master";
+}
+
+
+function gotoVideos(){
+  localStorage.setItem('videopage', 1);
+  window.location.href="<?php echo $root;?>/admin/master";
+}
+
+function updateAjaxCall(postdata){
+   $.ajax({
+       url:"../admin/backend/api.php",
+       type:"GET",
+       data:postdata,
+       success:function(resp){
+         let data=JSON.parse(resp);
+         
+        localStorage.setItem("bm_audio_total", data.audio.Total);
+        localStorage.setItem("bm_video_total", data.video.Total);
+
+        $.each(data, function (i,k) {
+        $.each(k, function (key,val) {
+            let div_id=i+"_"+key;
+            //alert(div_id);
+            //let numberformat=val.toFixed(2);
+        $("#"+div_id).text(val);
+      //  console.log(key,val,div_id);
+    });
+});
+        } 
+      });
+}
+updateAjaxCall('master_audio_stats=1');
+</script>
+<?php require 'footer.php';?>

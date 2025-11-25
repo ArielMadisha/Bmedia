@@ -1,0 +1,521 @@
+<?php 
+
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+session_start();
+ $_SESSION['bmedia'] = true;
+
+ require_once '../../template/php/db.php';
+ $valueList=["whatsapp_number","email"];
+
+
+
+
+if(isset($_GET['master_newsletter'])){
+
+  $query = "SELECT *  FROM subscribe_news_letter";
+  
+$results = mysqli_query($connection, $query) or die('{"error" : "Error: Failed to count elements!"}' . mysqli_error($connection));
+
+
+$NewsletterList=[];
+while($row = mysqli_fetch_assoc($results)){
+    $NewsletterList[]=$row;
+}
+//total number of published_songs live in the db
+$num_rows = sizeof($NewsletterList);
+$returndata['data']=$NewsletterList;
+$returndata['total']=$num_rows;
+echo json_encode($returndata);
+
+}
+
+ if (isset($_GET['master_audio'])){
+
+    $query = "SELECT *  FROM songs order by status";
+    $results = mysqli_query($connection, $query) or die('{"error" : "Error: Failed to count elements!"}' . mysqli_error($connection));
+    
+    
+    $publishedsongList=[];
+    while($row = mysqli_fetch_assoc($results)){
+        $publishedsongList[]=$row;
+    }
+    //total number of published_songs live in the db
+    $num_published_songs = sizeof($publishedsongList);
+    $returndata['data']=$publishedsongList;
+    $returndata['total']=$num_published_songs;
+    echo json_encode($returndata);
+}
+//song stats
+if (isset($_GET['master_audio_stats'])){
+  //initilization
+
+    $publishedsongStats=[];
+    $publishedsongStats['audio']['Total']=0;
+    $publishedsongStats['video']['Total']=0;
+    
+    //songs 
+    $query = "SELECT count(item_id) as total,status  FROM songs group by status";
+    $results_songs = mysqli_query($connection, $query) or die('{"error" : "Error: Failed to count elements!"}' . mysqli_error($connection));
+    
+    //videos
+    $query_video = "SELECT count(file_id) as total,status  FROM video_files group by status";
+    $results_videos = mysqli_query($connection, $query_video) or die('{"error" : "Error: Failed to count elements!"}' . mysqli_error($connection));
+
+    while($row1 = mysqli_fetch_assoc($results_videos)){
+        $video_status =   $row1['status'];
+        $video_total  =   $row1['total'];
+        $publishedsongStats['video'][$video_status]     =  $video_total;
+        $publishedsongStats['video']['Total']           += $video_total;
+     }
+
+
+    while($row = mysqli_fetch_assoc($results_songs)){
+        $song_status    =   $row['status'];
+        $song_total     =   $row['total'];
+        $publishedsongStats['audio'][$song_status]  =   $song_total;
+        $publishedsongStats['audio']['Total']       +=  $song_total;
+    }
+    
+    
+    //artist
+    $query_art = "SELECT count(artist_id) as total  FROM artists";
+    $results_art = mysqli_query($connection, $query_art) or die('{"error" : "Error: Failed to count elements!"}' . mysqli_error($connection));
+    
+    while($rowArt = mysqli_fetch_assoc($results_art)){
+        
+        $publishedsongStats['artist']['Total']  = $rowArt['total'];
+     }
+     
+     
+    //artist deleted
+    $query_art = "SELECT count(artist_id) as total  FROM artists where deleted ='1'";
+    $results_art = mysqli_query($connection, $query_art) or die('{"error" : "Error: Failed to count elements!"}' . mysqli_error($connection));
+    
+    while($rowArt = mysqli_fetch_assoc($results_art)){
+        
+        $publishedsongStats['artist']['deleted']  = $rowArt['total'];
+     } 
+
+    //total album
+    $query_album = "SELECT count(album_id) as total  FROM albums";
+    $results_album = mysqli_query($connection, $query_album) or die('{"error" : "Error: Failed to count elements!"}' . mysqli_error($connection));
+    
+    while($rowAlb = mysqli_fetch_assoc($results_album)){
+        
+        $publishedsongStats['album']['Total']  = $rowAlb['total'];
+     }
+     
+      //pending album
+    $query_album = "SELECT count(album_id) as total  FROM albums where status='pending' and deleted ='0'";
+    $results_album = mysqli_query($connection, $query_album) or die('{"error" : "Error: Failed to count elements!"}' . mysqli_error($connection));
+    
+    while($rowAlb = mysqli_fetch_assoc($results_album)){
+        
+        $publishedsongStats['album']['pending']  = $rowAlb['total'];
+     }
+     
+     
+     
+      //live album
+    $query_album = "SELECT count(album_id) as total  FROM albums where status='live' and deleted ='0'";
+    $results_album = mysqli_query($connection, $query_album) or die('{"error" : "Error: Failed to count elements!"}' . mysqli_error($connection));
+    
+    while($rowAlb = mysqli_fetch_assoc($results_album)){
+        
+        $publishedsongStats['album']['live']  = $rowAlb['total'];
+     }
+     
+     
+      //delted album
+    $query_album = "SELECT count(album_id) as total  FROM albums where deleted ='1'";
+    $results_album = mysqli_query($connection, $query_album) or die('{"error" : "Error: Failed to count elements!"}' . mysqli_error($connection));
+    
+    while($rowAlb = mysqli_fetch_assoc($results_album)){
+        
+        $publishedsongStats['album']['deleted']  = $rowAlb['total'];
+     }
+    
+    
+    echo json_encode($publishedsongStats);
+   
+}
+
+//master video
+if (isset($_GET['master_video'])){
+
+  $query = "SELECT *  FROM video_files order by status";
+  $results = mysqli_query($connection, $query) or die('{"error" : "Error: Failed to count elements!"}' . mysqli_error($connection));
+  
+  
+  $publishedvideoList=[];
+  while($row = mysqli_fetch_assoc($results)){
+      $publishedvideoList[]=$row;
+  }
+  //total number of published_songs live in the db
+  $returndataVideo['data']=$publishedvideoList;
+  $returndataVideo['total']= sizeof($publishedvideoList);
+  echo json_encode($returndataVideo);
+  }
+  
+
+if (isset($_GET['pagecontrols'])){
+    
+    $querypageControls="SELECT pagename,isActive,created_at,value from pagecontrols";
+    $resultsListpageControls = mysqli_query($connection, $querypageControls);
+    $isActivePage=[];
+    $isActivePage["updated_on"]="";
+        
+    while($pagecontrols_loop = mysqli_fetch_assoc($resultsListpageControls)){
+        $pagename=($pagecontrols_loop)['pagename'];
+        $pagestatus=$pagecontrols_loop['isActive'];
+        $pagevalue=$pagecontrols_loop['value'];
+        $isActivePage["updated_on"]=$pagecontrols_loop['created_at'];
+        
+        if(in_array($pagename,$valueList)){ 
+         $pagestatus=$pagevalue;
+        }
+        if(explode("-",$pagename)[0] !="Footer" ){
+          $isActivePage[$pagename]=$pagestatus;
+        }
+    
+    }    
+    
+    echo json_encode($isActivePage);
+}
+//update page controls
+if(isset($_POST['Home'])){
+ $data  =   $_POST;
+ $now   =   date("Y-m-d H:i:s");
+ 
+    foreach($data as $pagename=>$status){
+        $updateQuerypageControls="UPDATE pagecontrols set isActive='$status' where pagename='$pagename'"; 
+        if(in_array($pagename,$valueList)){
+            $updateQuerypageControls="UPDATE pagecontrols set value='$status' where pagename='$pagename'"; 
+        }
+        mysqli_query($connection, $updateQuerypageControls);
+    }
+ echo "Updated Successfully";
+}
+//update medias audio
+if (isset($_POST['song_name'])){
+    $mediaUpdateId          =   $_POST['song_id'];
+    $mediaUpdateStatus      =   $_POST['status'];
+    $mediaUpdateSongName    =   $_POST['song_name'];
+    $mediaUpdateLabel       =   $_POST['label'];
+    $updateQueryAudio       =   "UPDATE songs set status='$mediaUpdateStatus',song_name='$mediaUpdateSongName',label='$mediaUpdateLabel' where song_id='$mediaUpdateId'"; 
+    mysqli_query($connection, $updateQueryAudio);
+    echo '{"error":"Data Saved Successfully"}';
+}
+
+//update medias video
+if (isset($_POST['video_name'])){
+  $videoUpdateId        =   $_POST['video_id'];
+  $videoUpdateStatus    =   $_POST['status'];
+  $videoUpdateSongName  =   $_POST['video_name'];
+  $youtube_embed_link   =   $_POST['youtube_embed_link'];
+  $updateQueryVideo     =   "UPDATE video_files set status='$videoUpdateStatus',video_name='$videoUpdateSongName',youtube_embed_link='$youtube_embed_link' where file_id='$videoUpdateId'"; 
+  mysqli_query($connection, $updateQueryVideo);
+  echo '{"error":"Data Saved Successfully"}';
+}
+
+//update artist
+if (isset($_POST['artist_id'])){
+  $artist_id            =   $_POST['artist_id'];
+  $artist_name          =   $_POST['artist_name'];
+  
+  $updateQueryVideo     =   "UPDATE artists set artist_name='$artist_name' where artist_id='$artist_id'"; 
+  mysqli_query($connection, $updateQueryVideo);
+  echo '{"error":"Data Saved Successfully"}';
+  die;
+}
+
+//update album
+if (isset($_POST['album_id'])){
+  $album_id             =   $_POST['album_id'];
+  $album_name           =   $_POST['album_name'];
+  $artist_id            =   $_POST['artist_eid'];
+  $album_price          =   $_POST['album_price'];
+  $album_status         =   $_POST['album_status'];
+  
+ echo  $updateQueryVideo     =   "UPDATE albums set album_name='$album_name', artist_id='$artist_id',price='$album_price',status='$album_status' where album_id='$album_id'"; 
+  
+  mysqli_query($connection, $updateQueryVideo);
+  echo '{"error":"Data Saved Successfully"}';
+  die;
+}
+  
+//delete medias audio
+if (isset($_GET['deleteSongId'])){
+    
+    $song_id =    $_GET['deleteSongId'];
+   
+    $query  = "SELECT file_path FROM songs WHERE song_id = '".$song_id."'";
+    $result = mysqli_query($connection, $query);
+    $row    = mysqli_fetch_row($result);
+        
+    $file_path      = $row[0];
+   
+    if( $file_path !=''){
+           
+        if(file_exists($_SERVER['DOCUMENT_ROOT'].'/content/song/'.$file_path))
+        {
+            unlink($_SERVER['DOCUMENT_ROOT'].'/content/song/'.$file_path);
+        }
+    }
+    
+   $updateQueryAudio =   "Delete from songs where song_id='$song_id'"; 
+  
+   mysqli_query($connection, $updateQueryAudio);
+   echo '{"error":"Data Saved Successfully"}';
+}
+
+//delete medias video
+if (isset($_GET['deleteVideoId'])){
+    
+    $video_id =   $_GET['deleteVideoId'];
+    
+    $query  = "SELECT file_path FROM video_files WHERE file_id = '".$video_id."'";
+    $result = mysqli_query($connection, $query);
+    $row    = mysqli_fetch_row($result);
+        
+    $file_path      = $row[0];
+   
+    if( $file_path !=''){
+           
+        if(file_exists($_SERVER['DOCUMENT_ROOT'].'/content/video/videos/'.$file_path))
+        {
+            unlink($_SERVER['DOCUMENT_ROOT'].'/content/video/videos/'.$file_path);
+        }
+    }
+  
+  
+    $updateQueryVideo="Delete from video_files where  file_id='$video_id'";
+    mysqli_query($connection, $updateQueryVideo);
+    
+    echo '{"error":"Data Saved Successfully"}';
+  }
+
+/***--------------------------------------
+ * Name Swapnil acme
+ * Delete album / artist
+ * ---------------------------------------*/
+ 
+if (isset($_GET['deleteAlbumId'])){
+    
+    $album_id    =   $_GET['deleteAlbumId'];
+    
+    //delet album cover
+    $query  = "SELECT album_cover_path FROM albums WHERE album_id = '".$album_id."'";
+    $result = mysqli_query($connection, $query);
+    $row    = mysqli_fetch_row($result);
+        
+    $album_cover_path   = $row[0];
+   
+    if( $album_cover_path !=''){
+           
+        if(file_exists($_SERVER['DOCUMENT_ROOT'].'/content/album/'.$album_cover_path))
+        {
+            unlink($_SERVER['DOCUMENT_ROOT'].'/content/album/'.$album_cover_path);
+        }
+    }
+    
+   // delete all songs
+    $query       =  "SELECT file_path FROM songs WHERE album_id = '".$album_id."'";
+    $results_art =  mysqli_query($connection, $query) or die('{"error" : "Error: Failed to count elements!"}' . mysqli_error($connection));
+    
+    while($rowArt = mysqli_fetch_assoc($results_art)){
+       // $publishedsongStats['artist']['deleted']  = $rowArt['total'];
+        $file_path      = $rowArt['file_path'];
+   
+        if( $file_path !=''){
+               
+            if(file_exists($_SERVER['DOCUMENT_ROOT'].'/content/song/'.$file_path))
+            {
+                unlink($_SERVER['DOCUMENT_ROOT'].'/content/song/'.$file_path);
+            }
+        }
+    } 
+    
+    $updateQueryVideo="Delete from songs where  album_id='$album_id'";
+    mysqli_query($connection, $updateQueryVideo);
+    
+    
+    $updateQueryVideo="Delete from albums where  album_id='$album_id'";
+    mysqli_query($connection, $updateQueryVideo);
+    
+    echo '{"error":"Data Saved Successfully"}';
+}
+
+if (isset($_GET['deleteArtistId'])){
+    
+    $artist_id    =   $_GET['deleteArtistId'];
+    
+    //delet artist cover
+    $query  = "SELECT artist_image_path  FROM albums WHERE artist_id = '".$artist_id."'";
+    $result = mysqli_query($connection, $query);
+    $row    = mysqli_fetch_row($result);
+        
+    $album_cover_path   = $row[0];
+   
+    if( $album_cover_path !=''){
+           
+        if(file_exists($_SERVER['DOCUMENT_ROOT'].'/content/artist/artist_images/'.$album_cover_path))
+        {
+            unlink($_SERVER['DOCUMENT_ROOT'].'/content/artist/artist_images/'.$album_cover_path);
+        }
+    }
+    
+    
+    //delete album cover
+    $query      = "SELECT album_cover_path FROM albums WHERE artist_id = '".$artist_id."'";
+    $resultAlm  = mysqli_query($connection, $query);
+    
+    while($rowAlb = mysqli_fetch_assoc($resultAlm)){
+       // $publishedsongStats['artist']['deleted']  = $rowArt['total'];
+        $file_path      =   $rowAlb['album_cover_path'];
+   
+        if( $file_path !=''){
+            if(file_exists($_SERVER['DOCUMENT_ROOT'].'/content/album/'.$file_path))
+            {
+                unlink($_SERVER['DOCUMENT_ROOT'].'/content/album/'.$file_path);
+            }
+        }
+    } 
+    
+    //songs delete
+    $query       =  "SELECT file_path FROM songs WHERE artist_id = '".$artist_id."'";
+    $results_art =  mysqli_query($connection, $query) or die('{"error" : "Error: Failed to count elements!"}' . mysqli_error($connection));
+    
+    while($rowArt = mysqli_fetch_assoc($results_art)){
+       // $publishedsongStats['artist']['deleted']  = $rowArt['total'];
+        $file_path      =   $rowArt['file_path'];
+   
+        if( $file_path !=''){
+            if(file_exists($_SERVER['DOCUMENT_ROOT'].'/content/song/'.$file_path))
+            {
+                unlink($_SERVER['DOCUMENT_ROOT'].'/content/song/'.$file_path);
+            }
+        }
+    } 
+    
+    $delArtist   =   "Delete from songs where  artist_id='$artist_id'";
+    mysqli_query($connection, $delArtist);
+    
+    $delAlbum   =   "Delete from albums where  artist_id='$artist_id'";
+    mysqli_query($connection, $delAlbum);
+    
+    $delSng   =   "Delete from artists where  artist_id='$artist_id'";
+    mysqli_query($connection, $delSng);
+    
+    echo '{"error":"Data Saved Successfully"}'; 
+}
+/*----------------------------------------------------*/
+
+function random_strings() 
+{ 
+    $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'; 
+    return substr(str_shuffle($str_result), 0, rand()); 
+} 
+
+  // create ad
+
+  if (isset($_POST['ad_title']) && isset($_POST['ad_status'])){ 
+
+    
+     $ad_title=$_POST['ad_title'];
+     $ad_sub_title=$_POST['ad_sub_title'];
+     $ad_status=$_POST['ad_status'];
+     $ad_position=$_POST['position'];
+     $ad_url=$_POST['ad_url'];
+     $id=$_POST['id'];
+    
+     $update_image="";
+     
+     if($_FILES['image']['tmp_name']){
+      
+     $ad_image=$_FILES['image']['tmp_name'];
+     $file_ext=explode('.',$_FILES["image"]["name"])[1];
+     $target_dir="/admin/image/". random_strings().".".$file_ext;
+
+      $target_file =  $_SERVER['DOCUMENT_ROOT'] .$target_dir;
+      move_uploaded_file($ad_image, $target_file);
+
+      $update_image=",image='$target_dir'";
+  }
+  
+    
+     // $image_location=$target_dir.".".$file_ext;
+     $return['error']="";
+     if($id  == 0){
+     $ad_create_query="INSERT INTO advertisment (title,url,subtitle,image,status,position) VALUES ('$ad_title','$ad_url','$ad_sub_title','$target_dir','$ad_status','$ad_position')";
+     } 
+     if($id  > 0){
+      $ad_create_query="UPDATE advertisment SET title='$ad_title',url='$ad_url',subtitle='$ad_sub_title'$update_image,status='$ad_status',position='$ad_position'  WHERE id='$id'";
+     }
+     $results = mysqli_query($connection, $ad_create_query);
+     if(! $results){
+      $return['error']=mysqli_error($connection);
+     }
+     die(json_encode($return));
+      
+  }
+
+  // get list of ad
+if (isset($_GET['get_ads'])){
+  $queryad="SELECT * from advertisment order by position";
+  $resultsListpageControls = mysqli_query($connection, $queryad);
+  $listAdd=[];
+  
+  while($i = mysqli_fetch_assoc($resultsListpageControls)){ 
+    $listAdd[]=$i;
+  }
+    echo json_encode($listAdd);
+ }
+
+#-----------------------------------------------------------------
+// added by acme 
+// date 24 sept
+#----------------------------------------------------------------
+
+///get artist 
+
+if (isset($_GET['master_artist'])){
+
+    $query = "SELECT *  FROM artists order by added_on desc";
+    $results = mysqli_query($connection, $query) or die('{"error" : "Error: Failed to count elements!"}' . mysqli_error($connection));
+    
+    $publishedArtistList    =   [];
+    
+    while($row = mysqli_fetch_assoc($results)){
+        $publishedArtistList[]    =   $row;
+    }
+    //total number of published_songs live in the db
+    $num_published_artist   =   sizeof($publishedArtistList);
+    $returndata['data']     =   $publishedArtistList;
+    $returndata['total']    =   $num_published_artist;
+    
+    echo json_encode($returndata);
+}
+ 
+///get albums 
+
+if (isset($_GET['master_albums'])){
+
+    $query = "SELECT artists.artist_name,albums.*  FROM albums join artists on albums.artist_id =  artists.artist_id  order by albums.status";
+    $results = mysqli_query($connection, $query) or die('{"error" : "Error: Failed to count elements!"}' . mysqli_error($connection));
+    
+    
+    $publishedAlbumsList    =   [];
+    while($row = mysqli_fetch_assoc($results)){
+        $publishedAlbumsList[]    =   $row;
+    }
+    
+    //total number of published_songs live in the db
+    $num_published_albums    =   sizeof($publishedAlbumsList);
+    $returndata['data']     =   $publishedAlbumsList;
+    $returndata['total']    =   $num_published_albums;
+    
+    echo json_encode($returndata);
+}
+ 

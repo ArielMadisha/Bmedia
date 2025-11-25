@@ -1,0 +1,1152 @@
+<?php
+ require '../header.php';
+ if(! $_SESSION['isAdmin']){
+  header("Location: " . $_SESSION['root']);
+ }
+?>
+  <h3>Master Page</h3>
+  <!-- <span>Here the rights to have delete and edit the content</span> -->
+
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">Audio</a></li>
+    <li><a data-toggle="tab" href="#menu1">Video</a></li>
+    <li ><a data-toggle="tab" href="#menu2">Page Controls</a></li>
+    <li><a data-toggle="tab" href="#menu3">Advertisement</a></li>
+    <li><a data-toggle="tab" href="#menu4">NewsLetters</a></li>
+    
+    <li><a data-toggle="tab" href="#menu5">Artists</a></li>
+    <li><a data-toggle="tab" href="#menu6">Albums</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <h3>Audio -<span class="total-audios"> </span></h3> 
+<div class="table-responsive">
+      <table id="example" class="table table-striped table-bordered nowrap dataTable" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Featured Artists</th>
+                            <th>Label</th>
+                            <th>Artist Id</th>
+			                <th>Content Access</th>
+                            <th>Sold</th>
+                            <th>Song Added Date</th>
+                            <th>Status</th>
+                            <th>Edit / Delete</th>
+                        </tr>
+                    </thead>
+                   </table>
+
+      </div>          
+     
+    </div>
+    <div id="menu1" class="tab-pane fade">
+      <h3>Video -<span class="total-videos"> </span></h3>
+<div class="table-responsive">
+      <table id="example_video" class="table table-striped table-bordered nowrap dataTable" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Song Id</th>
+                            <th>Youtueb Link</th>
+                            <th>Content Access</th>
+                            <th>Sold</th>
+                            <th>Video Added Date</th>
+                            <th>Status</th>
+                            <th>Edit / Delete</th>
+                        </tr>
+                    </thead>
+                   </table>
+</div>
+      <!-- <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p> -->
+    </div>
+
+
+    <div id="menu2" class="tab-pane fade">
+      <h3>Page Controls</h3>
+            
+      <p id="pagecontrolUpdateDate">Last Update On:</p>
+      <div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+         Side Menu</a>
+      </h4>
+    </div>
+    <div id="collapse1" class="panel-collapse collapse in">
+      <div class="panel-body">
+      <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Menu Name</th>
+        <th>Sub Menu</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <form id="sidebar" novalidate="true">
+      
+      <tr>
+        <td colspan="2"><span class="glyphicon glyphicon-home" ></span>  Home</td>
+        
+        <td><label class="checkbox-inline"><input type="radio" value="1" name="Home">Active</label>
+<label class="checkbox-inline"><input type="radio" value="0" name="Home" >InActive</label>
+</td>
+      </tr>
+      <tr>
+        <td colspan="2"><span class="glyphicon glyphicon-music"></span>  Listen</td>
+        
+        <td><label class="checkbox-inline"><input type="radio" value="1" name="Listen">Active</label>
+<label class="checkbox-inline"><input type="radio" value="0" name="Listen">InActive</label>
+</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="glyphicon glyphicon-music"></span>  Songs</td>
+        <td><label class="checkbox-inline"><input type="radio" name="Songs" value="1">Active</label>
+<label class="checkbox-inline"><input type="radio" value="0" name="Songs">InActive</label>
+</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="glyphicon glyphicon-music"></span>  Albums</td>
+        <td><label class="checkbox-inline"><input type="radio" value="1" name="Albums">Active</label>
+<label class="checkbox-inline"><input type="radio" value="0" name="Albums">InActive</label>
+</td>
+      </tr>
+      <tr>
+        <td colspan="2"><span class="glyphicon glyphicon-facetime-video"></span> Watch</td>
+        
+        <td><label class="checkbox-inline"><input type="radio" value="1" name="Watch">Active</label>
+<label class="checkbox-inline"><input type="radio" value="0" name="Watch">InActive</label>
+</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="glyphicon glyphicon-music"></span>  Videos</td>
+        <td><label class="checkbox-inline"><input type="radio" name="Watch-Videos" value="1">Active</label>
+<label class="checkbox-inline"><input type="radio" value="0" name="Watch-Videos">InActive</label>
+</td>
+      </tr>
+      <tr>
+        <td colspan="2"><span class="glyphicon glyphicon-user"></span> Artists</td>
+        <td><label class="checkbox-inline"><input type="radio" value="1" name="Artists">Active</label>
+<label class="checkbox-inline"><input type="radio" value="0" name="Artists">InActive</label>
+</td>
+      </tr>
+      <tr>
+        <td colspan="2"><span class="glyphicon glyphicon-cloud-upload"></span> Uploads</td>
+        <td><label class="checkbox-inline"><input type="radio" value="1" name="Upload">Active</label>
+<label class="checkbox-inline"><input type="radio" value="0" name="Upload">InActive</label>
+</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="glyphicon glyphicon-music"></span>  Artist</td>
+        <td><label class="checkbox-inline"><input type="radio" name="Upload-Artist" value="1">Active</label>
+<label class="checkbox-inline"><input type="radio" value="0" name="Upload-Artist">InActive</label>
+</td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td><span class="glyphicon glyphicon-music"></span>  Song</td>
+        <td><label class="checkbox-inline"><input type="radio" name="Upload-Song" value="1">Active</label>
+<label class="checkbox-inline"><input type="radio" value="0" name="Upload-Song">InActive</label>
+</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="glyphicon glyphicon-music"></span>  Video</td>
+        <td><label class="checkbox-inline"><input type="radio" name="Upload-Video" value="1"> Active</label>
+<label class="checkbox-inline"><input type="radio" value="0" name="Upload-Video"> InActive</label>
+</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="glyphicon glyphicon-music"></span>  Album</td>
+        <td><label class="checkbox-inline"><input type="radio" name="Upload-Album" value="1"> Active</label>
+<label class="checkbox-inline"><input type="radio" value="0" name="Upload-Album"> InActive</label>
+</td>
+      </tr>
+
+      <tr>
+        <td colspan="2"><span class="glyphicon glyphicon-heart-empty"></span> MyFavorite</td>
+        <td><label class="checkbox-inline"><input type="radio" value="1" name="My-Favourites" > Active</label>
+<label class="checkbox-inline"><input type="radio" value="0" name="My-Favourites"> InActive</label>
+</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="glyphicon glyphicon-music"></span>  All Songs</td>
+        <td><label class="checkbox-inline"><input type="radio" name="My-Favourites-All-Songs" value="1"> Active</label>
+<label class="checkbox-inline"><input type="radio" value="0" name="My-Favourites-All-Songs"> InActive</label>
+</td>
+      </tr>
+      <tr>
+        <td colspan="2"><span class="glyphicon glyphicon-phone"></span> Contact</td>
+        <td><label class="checkbox-inline"><input type="radio" value="1" name="Contact"> Active</label>
+<label class="checkbox-inline"><input type="radio" value="0" name="Contact"> InActive</label>
+</td>
+      </tr>
+      <tr>
+        <td colspan="2"><span class="glyphicon glyphicon-question-sign"></span>  
+Help</td>
+        
+        <td><label class="checkbox-inline"><input type="radio" value="1" name="Help"> Active</label>
+<label class="checkbox-inline"><input type="radio" value="0" name="Help"> InActive</label>
+</td>
+      </tr>
+
+    </tbody>
+  </table>
+  <div class="row">
+    <div class="col-md-12">
+    <button  type="button" id="saveform" data-id="sidebar" class="btn btn-success btn-sm float-right saveform">Save</button>
+    </div>
+  </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+        Top Menu</a>
+      </h4>
+    </div>
+    <div id="collapse2" class="panel-collapse collapse">
+      <div class="panel-body">
+      <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Menu Name</th>
+        <th>Sub Menu</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    <!--   <form id="topmenu" novalidate="true"> -->
+      
+      <tr>
+        <td colspan="2"><span class="glyphicon glyphicon-home" ></span>  TopMenu</td>
+        
+        <td><label class="checkbox-inline"><input type="radio" value="1" name="TopMenu"> Active</label>
+<label class="checkbox-inline"><input type="radio" value="0" name="TopMenu" > InActive</label>
+</td>
+      </tr>
+</tbody>
+</table>
+<div class="row">
+    <div class="col-md-12">
+    <button  type="button" id="saveform" data-id="sidebar" class="btn btn-success btn-sm float-right saveform">Save</button>
+    </div>
+  </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+        Footer</a>
+      </h4>
+    </div>
+    <div id="collapse3" class="panel-collapse collapse">
+      <div class="panel-body">
+      <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Menu Name</th>
+        <th>Sub Menu</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      
+      <tr>
+        <td colspan="2"><span class="glyphicon glyphicon-home" ></span>  Footer</td>
+        
+        <td><label class="checkbox-inline"><input type="radio" value="1" name="Footer"> Active</label>
+<label class="checkbox-inline"><input type="radio" value="0" name="Footer" > InActive</label>
+</td>
+      </tr>
+      <tr>
+        <td colspan="2"><!-- <span class="glyphicon glyphicon-home" ></span> -->WhatsApp</td>
+        <td>
+        <div class="input-group margin-bottom-sm">
+  <span class="input-group-addon"><i class="fa fa-whatsapp"></i></span>
+  <input class="form-control" type="text" placeholder="Mobile Number" name="whatsapp_number" id="whatsapp_number">
+</div>
+</td>
+      </tr>
+      <tr>
+        <td colspan="2"><!-- <span class="glyphicon glyphicon-home" ></span> -->Email</td>
+        <td>
+        <div class="input-group margin-bottom-sm">
+  <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+  <input class="form-control" type="email" placeholder="Email" name="email" id="email">
+</div>
+</td>
+      </tr>
+</tbody>
+</table>
+<div class="row">
+    <div class="col-md-12">
+    <button  type="button" id="saveform" data-id="sidebar" class="btn btn-success btn-sm float-right saveform">Save</button>
+    </form>
+    </div>
+  </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+
+
+<div id="menu4" class="tab-pane fade">
+      <h3>NewsLetters</h3>
+      
+      <div class="table-responsive">
+      <table id="example_newsletter" class="table table-striped table-bordered nowrap dataTable" cellspacing="0" width="100%">
+
+                    <thead>
+                    <tr>
+                       
+                            <th>Email</th>
+                            <th>Created At</th>
+                   </tr>
+                    </thead>
+                   </table>
+
+      </div>
+
+      </div>
+
+    <div id="menu3" class="tab-pane fade">
+      <h3>Advertisement</h3>
+      <p>
+  
+      <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ad_modal"> <i class="fa fa-plus"></i> Add Advertise</button>
+      
+      </p>
+      <br>
+<div class="table-responsive">
+      <table class="table table-striped table-bordered" id="adv_table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Title</th>
+        <th>SubTitle</th>
+        <th>Position</th>
+        <th>Status</th>
+        <th>URL</th>
+        <th>Image</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      </tbody>
+      </table>
+</div>
+    </div>
+   
+   <!----------------------- addd by acme --------------------------->
+   
+      <div id="menu5" class="tab-pane fade">
+      <h3>Artists</h3>
+      <br>
+        <div class="table-responsive">
+            <table style="width:100%" class="table table-striped table-bordered" id="art_table">
+            <thead>
+              <tr>
+                <th>Artist id</th>
+                <th>Artist name</th>
+                <th>Primary genre</th>
+                <th>Secondary genre</th>
+                <th>Added Date</th>
+               <!--<th>Actions</th>-->
+              </tr>
+            </thead>
+            <tbody>
+            
+            </tbody>
+           </table>
+        </div>
+     </div>
+     
+     
+     <div id="menu6" class="tab-pane fade">
+      <h3>Albums</h3>
+       <br>
+        <div class="table-responsive">
+            <table style="width:100%"  class="table table-striped table-bordered" id="albm_table">
+            <thead>
+              <tr>
+                <th>Album id</th>
+                <th>Album name</th>
+                <th>Artist Name</th>
+                <th>Price</th>
+                <th>Sold</th>
+                <th>Status</th>
+                <th>Release date</th>
+                <!--<th>Actions</th>-->
+              </tr>
+            </thead>
+            <tbody>
+            
+            </tbody>
+           </table>
+        </div>
+     </div>
+   
+   
+   <!------ end acme ------------------------------------------------> 
+  </div>
+ <!-- Modal begin-->
+ <div class="modal fade" id="audio_modal" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-center">
+    <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Update Data</h4>
+        </div>
+        <div class="modal-body">
+        <form novalidate="true" id="songupdate">
+        <div class="row">
+    <div class="col-md-6">
+    <label for="usr">Song Name:</label>
+  <input type="text" class="form-control" id="song_name" name="song_name">
+  <input type="hidden" class="form-control" id="song_id" name="song_id">
+  </div>
+    <div class="col-md-6">
+    <label for="usr">Feature Artist:</label>
+<input type="text" class="form-control" id="feature_artist" name="feature_artist">
+</div>
+  </div>
+<br>
+  <div class="row">
+    <div class="col-md-6">
+    <label for="usr">Label:</label>
+  <input type="text" class="form-control" id="label" id="label" name="label">
+  </div>
+    <div class="col-md-6">
+    <label for="usr">Artist Id:</label>
+<input type="text" class="form-control" id="artist_id" name="artist_id">
+</div>
+  </div>
+<br>
+
+  <div class="row">
+  <div class="col-md-6">
+    <label for="usr">Content Access:</label>
+<input type="text" disabled class="form-control" id="content_access" name="content_access">
+</div>
+
+  <div class="col-md-6">
+    <label for="usr">Sold:</label>
+  <input type="text" disabled class="form-control"  id="sold" name="sold">
+  </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-6">
+    <label for="usr">Song Added Date:</label>
+  <input type="text" class="form-control"  readonly id="song_added_date" name="song_added_date">
+  </div>
+    <div class="col-md-6">
+    <label for="usr">Status:</label>
+<select class="form-control" id="status" name="status">
+    <option value='' disabled>select</option>
+    <option value='live'>Live</option>
+    <option value='pending'>Pending</option>
+    <option value='removed'>Removed</option>
+    
+  </select>
+</div>
+  </div>
+
+  
+        </div>
+        <!--  onclick="updateRowAudio()" -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" id="updateaudio"  onclick="updateRowAudio()" data-id=""  data-dismiss="modal">Update</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+  <!-- modal close -->
+
+
+
+ <!-- Modal video begin-->
+ <div class="modal fade" id="video_modal" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-center">
+    <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Update Data</h4>
+        </div>
+        <div class="modal-body">
+        <form novalidate="true" id="videoupdate">
+        <div class="row">
+    <div class="col-md-6">
+    <label for="usr">Video Name:</label>
+  <input type="text" class="form-control" id="video_name" name="video_name">
+  <input type="hidden" class="form-control" id="video_id" name="video_id">
+  </div>
+    <div class="col-md-6">
+    <label for="usr">Song Id:</label>
+<input type="text" class="form-control" id="linked_song_id" name="linked_song_id">
+</div>
+  </div>
+<br>
+  <div class="row">
+    <div class="col-md-6">
+    <label for="usr">Youtube Link:</label>
+  <input type="url" class="form-control" id="youtube_embed_link"  name="youtube_embed_link">
+  </div>
+    <div class="col-md-6">
+    <label for="usr">Content Access:</label>
+<input type="text" class="form-control" id="content_access" name="content_access">
+</div>
+  </div>
+<br>
+  <div class="row">
+    <div class="col-md-6">
+    <label for="usr">Video Added Date:</label>
+  <input type="text" class="form-control" readonly id="added_on" name="added_on">
+  </div>
+    <div class="col-md-6">
+    <label for="usr">Status:</label>
+<select class="form-control" id="status" name="status">
+    <option value='' disabled>select</option>
+    <option value='live'>Live</option>
+    <option value='pending'>Pending</option>
+    <option value='removed'>Removed</option>
+    
+  </select>
+</div>
+  </div>
+
+  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" id="update_video" data-id=""  onclick="updateRowVideo()" data-dismiss="modal">Update</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+  <!-- vide modal close -->
+
+
+  <!-- ad Modal begin-->
+<div id="ad_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+      <form novalidate="true" id="ad_form" enctype='multipart/form-data'>
+      <div class="row">
+      <div class="col-md-6">
+      <label>Title</label>
+      <input type="text"  class="form-control" id="title" placeholder="Enter title" name="ad_title" required>
+      </div>
+      <div class="col-md-6">
+        <input type="hidden" name="id" id="id" value=0>
+      <label>Sub Title</label>
+      <input type="text"  class="form-control" id="subtitle" placeholder="Enter subtitle" name="ad_sub_title" required>
+      </div>
+      </div>
+       <br>
+      <div class="row">
+      <div class="col-md-6">
+      <label>Position</label>
+      <input type="number" min=1 max=5 class="form-control" id="position" placeholder="Enter position" name="position" required>
+      </div>
+      <div class="col-md-6">
+      <label>Status</label>
+      <select class="form-control" id="status" name="ad_status" required>
+    <option  disabled>select</option>
+    <option value=0>InActive</option>
+    <option value=1>Active</option>
+    </select>
+      </div>
+      </div>
+      <br>
+      <div class="row">
+      <div class="col-md-6">
+      <label>Image URL</label>
+      <input type="url"  class="form-control" id="url" placeholder="Enter URL" name="ad_url">
+      
+      </div>
+      <div class="col-md-6">
+      <label>Select File</label>
+      <input type="file" accept="image/*" required  class="form-control" id="image" placeholder="Enter title" name="image">
+      
+      </div>
+      </div>
+    
+   
+    
+  
+      </div>
+      <div class="modal-footer">
+      <button type="submit" class="btn btn-default btn-success ad_create">Submit</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+<!-- ad Modal end -->
+
+<script>
+  var fields=["song_name","feature_artist","label","artist_id","content_access","sold","song_added_date","status"];
+  var videofields=["video_name","linked_song_id","youtube_embed_link","content_access","sold","added_on","status"];
+  let colorList={"live":"success","pending":"warning","removed":"danger"};
+  let adListText={"0":{"text":"Inactive","color":"danger"},"1":{"text":"Active","color":"success"}};
+  
+  var videopage_active  = localStorage.getItem('videopage');
+  var albumpage_active  = localStorage.getItem('albumpage');
+  var artistpage_active = localStorage.getItem('artistpage');
+  
+  if(videopage_active == 1){
+  
+   $(".nav-tabs li").eq(0).removeClass('active');
+   $(".nav-tabs li").eq(1).addClass('active');
+   $(".tab-content div").eq(0).removeClass('in active');
+   $(".tab-content div#menu1").addClass('in active');
+   localStorage.setItem('videopage', '0');
+  }
+  
+  
+  if(albumpage_active == 1){
+  
+   $(".nav-tabs li").eq(0).removeClass('active');
+   $(".nav-tabs li").eq(6).addClass('active');
+  $(".tab-content div").eq(0).removeClass('in active');
+   $(".tab-content div#menu6").addClass('in active');
+   localStorage.setItem('albumpage', '0');
+  }
+  
+  
+  if(artistpage_active == 1){
+  
+   $(".nav-tabs li").eq(0).removeClass('active');
+   $(".nav-tabs li").eq(5).addClass('in active');
+   $(".tab-content div").eq(0).removeClass('in active');
+   $(".tab-content div#menu5").addClass('in active');
+   localStorage.setItem('artistpage', '0');
+  }
+
+
+  function updateAjaxCall(postdata){
+   $.ajax({
+       url:"../backend/api.php",
+       type:"POST",
+       data:postdata,
+       success:function(resp){ } 
+      });
+    }
+  
+    function deleteAjaxCall(id){
+      
+   $.ajax({
+       url:"../backend/api.php",
+       type:"GET",
+       data : id,
+       success:function(resp){ } 
+      });
+    }
+  
+  function updateRowAudio(){
+    
+        var updaterow=$("#updateaudio").data("id"); // will return the number 123
+        var a=$("#example tbody tr");
+        var currenttable_row=a[updaterow];
+        console.log(currenttable_row);
+        var cells = currenttable_row.getElementsByTagName("td");
+        var datas=$("#songupdate").serialize();
+        updateAjaxCall(datas);
+            for(let i=0;i<8;i++){
+              var updatevalue=$("#"+fields[i]).val();
+            if(i==4){
+                     updatevalue='<span class="text-primary">'+updatevalue  +'</span>';
+              } 
+              if(i==7){
+                     updatevalue='<span class="badge badge-'+colorList[updatevalue]+'">'+updatevalue  +'</span>';
+              }
+              cells[i].innerHTML =updatevalue;    
+            }
+            swal("Values Updated Successfully", {
+      icon: "success",
+      closeModal: true,
+    });
+      
+  }
+  function updateRowVideo(){
+    
+    let updaterow=$("#update_video").data("id"); // will return the number 123
+    let a=$("#example_video tbody tr");
+    let currenttable_row=a[updaterow];
+    let cells = currenttable_row.getElementsByTagName("td");
+    let datas_video=$("#videoupdate").serialize();
+     updateAjaxCall(datas_video);
+        for(let i=0;i< 7;i++){
+          let updatevalue=$("#video_modal #"+videofields[i]).val();
+            
+            if(i==3){
+                     updatevalue='<span class="text-primary">'+updatevalue  +'</span>';
+              }
+          if(i==6){
+                 updatevalue='<span class="badge badge-'+colorList[updatevalue]+'">'+updatevalue  +'</span>';
+          }
+
+
+          if(i !=4){
+          cells[i].innerHTML =updatevalue;    
+        }
+        }
+        swal("Values Updated Successfully", {
+  icon: "success",
+  closeModal: true,
+});
+  
+}
+var adList;
+
+function getAds(){
+  $.ajax({
+       url:"../backend/api.php?get_ads=1",
+       type:"GET",
+       async: false,
+       success:function(resp){ 
+         $("#adv_table tbody").empty();
+         var ads=JSON.parse(resp);
+         if(ads && ads.length > 0){
+          adList=ads;
+       for(let j=0;j<ads.length;j++){
+        
+         let ad_status=ads[j]['status'];
+         var imagetd="<td class='text-center'>No Image</td>";
+         if(ads[j]['image']){
+          imagetd='<td><div class="card" style="width: 18rem;"><img src="'+ads[j]['image']+'"  class="card-img-top w-30vh" alt="..."></div></td>';
+         }
+         let ad_span='<span class="badge badge-'+adListText[ad_status]['color']+'">'+adListText[ad_status]['text']+'</span>';
+         
+                     $("#adv_table tbody").append('<tr><td>'+(j+1)+'</td><td>'+ads[j]['title']+'</td><td>'+ads[j]['subtitle']+'</td><td class="text-center">'+ads[j]['position']+'</td><td>'+ad_span+'</td><td>'+ads[j]['url']+'</td>'+imagetd+'<td class="adv_table_action"><a class="edit ad_edit" href="javascript:" data-id='+j+' title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a><a class="delete editor_remove" data-id='+ads[j]['id']+' href="javascript:" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a></td></tr>'); 
+            }       
+         }
+
+       } 
+      });
+
+}
+getAds();
+
+
+  function pagecontrolseGet(){
+    $.ajax({
+       url:"../backend/api.php?pagecontrols=1",
+       type:"GET",
+       success:function(resp){
+         let parsedData=JSON.parse(resp);
+         
+        for(let key in parsedData){
+          let value=parsedData[key];
+           let userdefinedList=["whatsapp_number","email"];
+          if(userdefinedList.indexOf(key) >=0 ){
+           $("#"+key).val(value);
+          }
+          if(key !='updated_on' && userdefinedList.indexOf(key) < 0){
+              $("input[name="+key+"][value=" + value + "]").attr('checked', 'checked');
+          }
+         
+          if(key =='updated_on'){
+            $("#pagecontrolUpdateDate").text("Last Update On: "+value);
+          }
+         
+
+        }
+
+       }
+    });
+  }
+
+  pagecontrolseGet();
+
+ $(document).ready(function() {
+
+  $("#ad_form").on('submit', function(e){
+    
+    var form_validate=$("#ad_form").valid();
+    var formvalue=new FormData(this);
+      if(form_validate) {
+   
+      $.ajax({
+       url:"../backend/api.php",
+       type:"POST",
+       data:formvalue,
+       contentType: false,
+            cache: false,
+            processData:false,
+        success:function(resp){
+        swal("Ad Created Successfully", {
+        icon: "success",
+        closeModal: true,
+    });
+    getAds();
+    $("#ad_modal").modal('hide');
+       }
+    });
+  } 
+  e.preventDefault();
+  
+      
+ });
+
+  $('.saveform').click(function(){
+      let formid=$(this).attr("data-id");
+      var formvalue=$("#"+formid).serialize();
+      $.ajax({
+       url:"../backend/api.php",
+       type:"POST",
+       data:formvalue,
+       success:function(resp){
+         swal("Page Controls Updated Successfully", {
+      icon: "success",
+      closeModal: true,
+    });
+
+       }
+    });
+      
+ });
+ // edit add 
+ $('#adv_table').on('click', 'a.ad_edit', function (e) { 
+   //adList
+$("#image").prop("required",false);
+    let id=$(this).data('id');
+    let edit_ad_data=adList[id];
+    
+    for(let input_id in edit_ad_data){
+         $("#"+input_id).val(edit_ad_data[input_id]);
+    }
+
+    $("#ad_modal").modal("show");
+    e.preventDefault();
+});
+
+  
+    // Edit record
+    $('#example').on('click', 'a.editor_edit', function (e) {
+       let row=$(this).closest('tr');
+       let songid=$(this).data('id');
+       $("#song_id").val(songid);
+        var data=row[0]['cells'];
+        var rowindex=row[0]['rowIndex']-1;
+        $('#updateaudio').attr('data-id', rowindex);
+
+        $.each(data, function( index, value ) {
+          //if(index < 6)
+          {
+            var getid=fields[index];
+            var fieldvalue=value['innerText'];
+            //alert(getid);
+            //alert(fieldvalue);
+            $("#audio_modal #"+getid).val(fieldvalue);  
+        
+          }
+            });
+             $('#audio_modal').modal('show');
+             e.preventDefault();
+    } );
+
+    // Edit record video
+    $('#example_video').on('click', 'a.editor_edit', function (e) {
+       var row=$(this).closest('tr');
+       let videoid=$(this).data('id');
+       $("#video_id").val(videoid);
+        var data=row[0]['cells'];
+        var rowindex=row[0]['rowIndex']-1;
+        $('#update_video').attr('data-id', rowindex);
+
+        $.each(data, function( index, value ) {
+          if(index < 8){
+            let getid=videofields[index];
+            let fieldvalue=value['innerText'];
+            //console.log(getid,fieldvalue);
+            $("#video_modal #"+getid).val(fieldvalue);  
+        
+          }
+});
+ $('#video_modal').modal('show');
+        e.preventDefault();
+    } );
+ 
+ // Delete a record video
+ $('#example_video').on('click', 'a.editor_remove', function (e) {
+        
+        var row=$(this).closest('tr');
+        var data=row[0]['cells'];
+        let songid=$(this).data('id');
+        
+        var rowindex=row[0]['rowIndex']-1;
+        var a=$("#example_video tbody tr");
+        var currenttable_row=a[rowindex];
+        var cells = currenttable_row.getElementsByTagName("td");
+      swal({
+  title: "Are you sure?",
+  text: "Once deleted, you will not be able to recover this imaginary file!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    //remove ajax call
+    let url="deleteVideoId="+songid+"";
+    deleteAjaxCall(url);
+    //remove elements locally
+  //  $(this).closest("tr").remove();
+    cells[6].innerHTML ='<span class="badge badge-danger">removed</span>';    
+ swal("Poof! Your imaginary file has been deleted!", {
+      icon: "success",
+    });
+  }
+
+});
+      
+        e.preventDefault();
+    } );
+
+    // Delete a record
+    $('#example').on('click', 'a.editor_remove', function (e) {
+        
+        var row=$(this).closest('tr');
+        var data=row[0]['cells'];
+        let songid=$(this).data('id');
+        var rowindex=row[0]['rowIndex']-1;
+        var a=$("#example tbody tr");
+        var currenttable_row=a[rowindex];
+        var cells = currenttable_row.getElementsByTagName("td");
+      swal({
+  title: "Are you sure?",
+  text: "Once deleted, you will not be able to recover this imaginary file!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    //remove ajax call
+    let url="deleteSongId="+songid+"";
+    deleteAjaxCall(url);
+    //remove elements locally
+  //  $(this).closest("tr").remove();
+    cells[7].innerHTML ='<span class="badge badge-danger">removed</span>';    
+ swal("Poof! Your imaginary file has been deleted!", {
+      icon: "success",
+    });
+  }
+});
+      
+        e.preventDefault();
+    } );
+ 
+    
+    $('#example').DataTable( {
+       ajax: "../backend/api.php?master_audio=1",
+       bLengthChange : false,
+       columnDefs: [{
+      targets: 5,
+      className: 'dt-body-center'
+    }],
+       order: [[ 5, "asc" ]],
+
+       pageLength: 30,
+        columns: [
+           { data: "song_name" },
+            { data: "featured_artists" },
+            { data: "label" }, 
+            {data:"artist_id"},
+{ data: null, render: function ( data, type, row ) {
+                let arr={1:"Paid Downloads only (No streaming)",
+2:"Paid Downloads and streaming",
+3:"Free Downloads (includes streaming)",
+4:"Free Streaming only (not downloadable)",
+5:"Streaming only (Entry level & premium subsribers)",
+6:"Streaming only (Premium Subscribers Only)",
+};
+var text=arr[data.content_access] ? arr[data.content_access] : "--";
+                return '<span class="text-primary">'+text+'</span>';
+            } },
+            {data:"sold"},
+            { data: "song_added_on" },
+            { data: null, render: function ( data, type, row ) {
+                let arr={"live":"success","pending":"warning","removed":"danger"};
+                return '<span class="badge badge-'+arr[data.status]+'">'+data.status+'</span>';
+            } },
+            { data: null, render: function ( data, type, row ) {
+                let arr={"live":"success","pending":"warning","removed":"danger"};
+                return '<a class="edit editor_edit" href="" data-id='+data.song_id+' title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a><a class="delete editor_remove" data-id='+data.song_id+' href="" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>';
+            } }
+            
+        ] 
+    } );
+
+    $('#example_video').DataTable( {
+       ajax: "../backend/api.php?master_video=1",
+       bLengthChange : false,
+       pageLength: 30,
+       columnDefs: [{
+      targets: 5
+
+    }],
+       order: [[ 5, "asc" ]],
+        columns: [
+           { data: "video_name" },
+            { data: "linked_song_id" },
+            { data: "youtube_embed_link" }, 
+{ data: null, render: function ( data, type, row ) {
+                let arr={1:"Paid Downloads only (No streaming)",
+2:"Paid Downloads and streaming",
+3:"Free Downloads (includes streaming)",
+4:"Free Streaming only (not downloadable)",
+5:"Streaming only (Entry level & premium subsribers)",
+6:"Streaming only (Premium Subscribers Only)",
+};
+var text=arr[data.content_access] ? arr[data.content_access] : "--";
+                return '<span class="text-primary">'+text+'</span>';
+            } },
+            { data: "sold" },
+            { data: "added_on" },
+            
+            { data: null, render: function ( data, type, row ) {
+                let arr={"live":"success","pending":"warning","removed":"danger"};
+                return '<span class="badge badge-'+arr[data.status]+'">'+data.status+'</span>';
+            } },
+            { data: null, render: function ( data, type, row ) {
+                let arr={"live":"success","pending":"warning","removed":"danger"};
+                return '<a class="edit editor_edit" href="javascript:" data-id='+data.file_id+' title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a><a class="delete editor_remove" data-id='+data.file_id+' href="javascript:" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>';
+            } }
+            
+        ]
+    } );
+
+   
+  $('#example_newsletter').DataTable( {
+       ajax: "../backend/api.php?master_newsletter=1",
+       bLengthChange : false,
+       pageLength: 30,
+       columnDefs: [{
+       targets: 1,
+      className: 'dt-body-center'
+    }],
+
+        columns: [
+        { data: null, render: function ( data, type, row ) {
+                return '<span class="text-primary text-center">'+data.email+'</span>';
+            }},
+            { data: "reg_date" },
+            
+        ]
+    } );
+    
+    
+    /*----addd by acme ----- */
+    
+    $('#art_table').DataTable( {
+           ajax: "../backend/api.php?master_artist=1",
+           ///bLengthChange : false,
+           pageLength: 30,
+           columnDefs: [{
+           //targets: 1,
+            className: 'dt-body-center'
+        }],
+    
+       
+    	 columns: [
+            { data: "artist_id" },
+            { data: "artist_name" },
+            { data: "primary_genre" },
+            { data: "secondary_genre" },
+            { data: "added_on" },
+            /*{ data: null, render: function ( data, type, row ) {
+                let arr={"live":"success","pending":"warning","removed":"danger"};
+                return '<a class="edit editor_edit" href="" data-id='+data.artist_id+' title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a><a class="delete editor_remove" data-id='+data.artist_id+' href="" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>';
+            } }*/
+        
+        ]
+            
+   });
+   
+   
+    $('#albm_table').DataTable( {
+           ajax: "../backend/api.php?master_albums=1",
+           ///bLengthChange : false,
+           pageLength: 30,
+           columnDefs: [{
+           //targets: 1,
+            className: 'dt-body-center'
+        }],
+    
+       
+    	 columns: [
+            { data: "album_id" },
+            { data: "album_name" },
+            { data: "artist_name" },
+            { data: "price" },
+            { data: "sold" },
+            { data: null, render: function ( data, type, row ) {
+                let arr={"live":"success","pending":"warning","removed":"danger"};
+                return '<span class="badge badge-'+arr[data.status]+'">'+data.status+'</span>';
+            } },
+             { data: "release_date" },
+            /*{ data: null, render: function ( data, type, row ) {
+                let arr={"live":"success","pending":"warning","removed":"danger"};
+                return '<a class="edit editor_edit" href="" data-id='+data.album_id+' title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a><a class="delete editor_remove" data-id='+data.album_id+' href="" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>';
+            } }*/
+        
+        ]
+            
+   });
+ 
+
+    /*---end ----*/
+    
+$(".total-audios").html(localStorage.getItem("bm_audio_total"));
+$(".total-videos").html(localStorage.getItem("bm_video_total"));
+
+setTimeout(function() {
+        let totalAudio = $('#example').DataTable();
+        let totalVideo = $('#example_video').DataTable();
+        // let totalnewsletter = $('#example_newsletter').DataTable();
+        $(".total-audios").html(totalAudio.data().count());
+        $(".total-videos").html(totalVideo.data().count());
+    }, 2500);
+
+}); 
+</script>
+
+  <?php 
+
+require 'footer.php'
+?>
